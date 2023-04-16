@@ -22,11 +22,56 @@ const { NotImplementedError } = require('../extensions/index.js');
  *   }
  * }
  */
-function removeKFromList(/* l, k */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function removeElements(l, k) {
+  // Handle the case where the list is empty.
+    
+  if (!l) {
+    return null;
+  }
+  
+  // Remove all leading elements with value k.
+  while (l && l.value === k) {
+    l = l.next;
+  }
+  
+  // Handle the case where the list is now empty.
+  if (!l) {
+    return null;
+  }
+  
+  // Remove all remaining elements with value k.
+  let prev = l;
+  let curr = l.next;
+  while (curr) {
+    if (curr.value === k) {
+      prev.next = curr.next;
+    } else {
+      prev = curr;
+    }
+    curr = curr.next;
+  }
+  
+  return l;
 }
 
-module.exports = {
-  removeKFromList
-};
+// Create the linked list from the array.
+const l = new ListNode(3);
+let curr = l;
+[1, 2, 3, 4, 5].forEach((val) => {
+  curr.next = new ListNode(val);
+  curr = curr.next;
+});
+
+// Call the removeElements function on the linked list.
+const result = removeElements(l, 3);
+
+// Print the result.
+let str = "";
+let node = result;
+while (node) {
+  str += node.value + " ";
+  node = node.next;
+}
+console.log(str.trim());
+
+
